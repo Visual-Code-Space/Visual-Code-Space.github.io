@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .name {
+          font-size: 25px;
+        }
+        .github-icon {
+            position: fixed;
+            bottom: 20px; /* Distância do fundo */
+            left: 50%; /* Centraliza horizontalmente */
+            transform: translateX(-50%); /* Ajusta para centralizar corretamente */
+            font-size: 30px;
+            text-decoration: none;
+            color: #333;
+        }
+        .github-icon:hover {
+            color: #0366d6;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="icon">
+      <h1 class="name">Visual Code Space</h1>
+    </div> <a href="https://github.com/Visual-Code-Space" class="github-icon" target="_blank"> <i class="fab fa-github"></i> </a>
+  </body>
+</html>
