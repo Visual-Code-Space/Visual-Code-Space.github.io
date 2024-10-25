@@ -1,13 +1,3 @@
-/*body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f0f0f0;
-  position: relative;
-}*/
 .icon {
   font-size: 50px;
   margin-bottom: 20px;
@@ -24,18 +14,34 @@
   text-decoration: none;
   color: #333;
 }
-
 .github-icon:hover {
   color: #0366d6;
+  font-size: 25px;
+}
+.navbar-title {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-weight: bold;
+  color: #000000;
 }
 
-
+/* GitHub repository list styles.*/
 .repositories {
   padding:15px;
 }
-
-.repositories item {
-  padding: 25px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+.repositories .item {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
+  padding:15px;
   color: #000000;
+}
+.repositories .item .title {
+  font-size: 20px;
+  margin: 0px;
+  font-weight: bold;
+  color: #000000;
+}
+.repositories .item .description {
+  font-size: 14px;
+  margin: 0px;
+  color: #212121;
 }
