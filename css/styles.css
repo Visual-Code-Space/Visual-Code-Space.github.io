@@ -1,4 +1,4 @@
-body {
+/*body {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,7 +7,7 @@ body {
   margin: 0;
   background-color: #f0f0f0;
   position: relative;
-}
+}*/
 .icon {
   font-size: 50px;
   margin-bottom: 20px;
@@ -24,6 +24,18 @@ body {
   text-decoration: none;
   color: #333;
 }
+
 .github-icon:hover {
   color: #0366d6;
+}
+
+
+.repositories {
+  padding:15px;
+}
+
+.repositories item {
+  padding: 25px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  color: #000000;
 }
