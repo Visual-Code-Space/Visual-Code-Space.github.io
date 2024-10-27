@@ -11,10 +11,10 @@ import {
   Icon,
   InlineCode,
   LetterFx,
-  Logo,
   Text,
 } from "@/once-ui/components";
 import Link from "next/link";
+import { social } from "@/once-ui/resources/config";
 
 export default function Home() {
   const links = [
@@ -155,7 +155,7 @@ export default function Home() {
             GitHub
           </Button>
           <Button
-            href="https://t.me/vc_space"
+            href={social.telegram}
             prefixIcon="telegram"
             size="s"
             variant="tertiary"

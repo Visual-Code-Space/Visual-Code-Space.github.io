@@ -12,6 +12,7 @@ import {
   baseURL,
   style,
   og,
+  meta,
   schema,
   social,
 } from "@/once-ui/resources/config";
@@ -41,8 +42,8 @@ export async function generateMetaData(): Promise<Metadata> {
   const metadataBase = host ? new URL(`https://${host}`) : undefined;
 
   return {
-    title: "Visual Code Space",
-    description: "Visual Code Space official website.",
+    title: meta.title,
+    description: meta.description,
     openGraph: {
       title: og.title,
       description: og.description,
