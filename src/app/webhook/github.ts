@@ -66,7 +66,7 @@ async function handleStarEvent({ payload }: { payload: StarEventPayload }): Prom
 }
 
 // Set up the listener for the "star" event to call the handleStarEvent function
-app.webhooks.on("star", handleStarEvent);
+app.webhooks.on("star.created", handleStarEvent);
 
 app.webhooks.onError((error: any) => {
   if (error.name === "AggregateError") {
