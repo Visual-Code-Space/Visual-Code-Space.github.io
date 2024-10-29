@@ -36,14 +36,12 @@ export function formatEvent(event: WebHookEvent): string | undefined {
         const treeId = commit.tree_id;
         const authorName = commit.author.name;
         const commitUrl = commit.url;
-        const commitMessage = commit.message;
+        const commitMessage = commit.message.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
 
         message += `\n[${treeId.slice(0,7)}](${commitUrl}) ${commitMessage} by ${authorName}`;
       });
 
       message += `\n\nPushed by *${pusherName}*`;
-      console.info(message);
-
       return message;
     }
     case "fork": {
