@@ -2,8 +2,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import { StarEventPayload } from "./github/payload/payloads";
+import { WebHookEvent } from "./github/payload/events";
+import { formatEvent } from "./github/format/eventFormatter";
 import { sendTelegramMessage } from "./telegram/telegram";
+
 import { Webhooks } from "@octokit/webhooks";
 
 const webhookSecret = process.env.WEBHOOK_SECRET as string;
@@ -18,20 +20,21 @@ export default async function handler(req: any, res: any) {
     res.status(405).end(`Method ${req.method} Not Allowed`);
     return;
   }
-  
-  const signature = req.headers["x-hub-signature-256"];
+  const headers = req.headers;
   const body = req.body;
 
+  const signature = headers["x-hub-signature-256"];
   if (!(await webhooks.verify(JSON.stringify(body), signature))) {
     res.status(401).end("Unauthorized");
     return;
   }
 
-  const payload: StarEventPayload = body;
+  const eventType = headers["x-github-event"];
+  const webhookEvent = new WebHookEvent(eventType, body);
+  const message = formatEvent(webhookEvent);
 
-  if (payload.action === "created" && payload.starred_at) {
-    const telegramMessage = `🌟 [@${payload.sender.login}](${payload.sender.html_url}) starred [${payload.repository.full_name}](${payload.repository.html_url})`;
-    await sendTelegramMessage(telegramMessage);
-  }
+  if (message !== undefined)
+    await sendTelegramMessage(message);
+
   res.status(200).end();
 }
