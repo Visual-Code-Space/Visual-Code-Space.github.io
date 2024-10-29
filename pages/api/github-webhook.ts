@@ -59,7 +59,7 @@ export default async function handler(req: any, res: any) {
   const signature = req.headers["x-hub-signature-256"];
   const body = req.body;
 
-  if (!(await webhooks.verify(body, signature))) {
+  if (!(await webhooks.verify(JSON.stringify(body), signature))) {
     res.status(401).end("Unauthorized");
     return;
   }
