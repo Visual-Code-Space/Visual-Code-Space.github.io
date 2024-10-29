@@ -51,7 +51,7 @@ interface StarEventPayload {
 
 export default async function handler(req: any, res: any) {
   const signature = req.headers["x-hub-signature-256"];
-  const body = await req.text();
+  const body = await req.body;
 
   console.log(signature);
 
