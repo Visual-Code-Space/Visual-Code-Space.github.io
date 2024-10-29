@@ -1,22 +1,11 @@
+import { Webhooks } from "@octokit/webhooks";
+
 import dotenv from "dotenv";
-import { App } from "octokit";
 
 dotenv.config();
 
-const appId = process.env.APP_ID as string;
-const webhookSecret = process.env.WEBHOOK_SECRET as string;
-const privateKeyBase64 = process.env.PRIVATE_KEY as string;
-const telegramToken = process.env.TELEGRAM_TOKEN as string;
-const telegramChatId = process.env.TELEGRAM_CHAT as string;
-
-const privateKey = Buffer.from(privateKeyBase64, 'base64').toString('utf-8');
-
-const app = new App({
-  appId: appId,
-  privateKey: privateKey,
-  webhooks: {
-    secret: webhookSecret,
-  },
+const webhooks = new Webhooks({
+  secret: process.env.WEBHOOK_SECRET,
 });
 
 async function sendTelegramMessage(message: string): Promise<void> {
@@ -54,7 +43,16 @@ interface StarEventPayload {
   };
 }
 
+
 export default async function handler(req: any, res: any) {
+  const signature = req.headers["x-hub-signature-256"];
+  const body = await req.text();
+
+  if (!(await webhooks.verify(body, signature))) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
   if (req.method === "POST") {
     const payload: StarEventPayload = req.body;
 
