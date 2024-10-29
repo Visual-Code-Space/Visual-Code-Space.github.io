@@ -30,7 +30,7 @@ export function formatEvent(event: WebHookEvent): string | undefined {
       const commits = pushPayload.commits;
       const commitCount = commits.length;
 
-      let message = `**${commitCount}** new commit${commitCount !== 1 ? 's' : ''} to **${repositoryName}:${pushBranch}**\n`;
+      let message = `*${commitCount}* new commit${commitCount !== 1 ? 's' : ''} to *${repositoryName}:${pushBranch}*\n`;
 
       commits.forEach((commit) => {
         const treeId = commit.tree_id;
@@ -41,7 +41,7 @@ export function formatEvent(event: WebHookEvent): string | undefined {
         message += `\n[${treeId.slice(0,7)}](${commitUrl}) ${commitMessage} by ${authorName}`;
       });
 
-      message += `\nPushed by **${pusherName}**`;
+      message += `\n\nPushed by *${pusherName}*`;
 
       return message;
     }
