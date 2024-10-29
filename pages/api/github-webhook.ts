@@ -50,6 +50,12 @@ interface StarEventPayload {
 
 
 export default async function handler(req: any, res: any) {
+  if (req.method !== "POST") {
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return;
+  }
+  
   const signature = req.headers.get("x-hub-signature-256");
   const body = req.body;
 
@@ -57,18 +63,12 @@ export default async function handler(req: any, res: any) {
     res.status(401).end("Unauthorized");
     return;
   }
+  const payload: StarEventPayload = body;
 
-  if (req.method === "POST") {
-    const payload: StarEventPayload = req.body;
-
-    if (payload.action === "created") {
-      console.log(`New star event received for repository ${payload.repository.full_name}`);
-      const telegramMessage = `The repository ${payload.repository.full_name} received a new star from ${payload.sender.login}! 🌟`;
-      await sendTelegramMessage(telegramMessage);
-    }
-    res.status(200).end();
-  } else {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+  if (payload.action === "created") {
+    console.log(`New star event received for repository ${payload.repository.full_name}`);
+    const telegramMessage = `The repository ${payload.repository.full_name} received a new star from ${payload.sender.login}! 🌟`;
+    await sendTelegramMessage(telegramMessage);
   }
+  res.status(200).end();
 }
