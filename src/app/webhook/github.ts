@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { App, Octokit } from "octokit";
+import { App } from "octokit";
 import fs from "fs";
 import http from "http";
 
@@ -7,9 +7,11 @@ dotenv.config();
 
 const appId = process.env.APP_ID as string;
 const webhookSecret = process.env.WEBHOOK_SECRET as string;
-const privateKey = process.env.PRIVATE_KEY as string;
+const privateKeyBase64 = process.env.PRIVATE_KEY as string;
 const telegramToken = process.env.TELEGRAM_TOKEN as string;
 const telegramChatId = process.env.TELEGRAM_CHAT as string;
+
+const privateKey = Buffer.from(privateKeyBase64, 'base64').toString('utf-8');
 
 const app = new App({
   appId: appId,
@@ -19,7 +21,6 @@ const app = new App({
   },
 });
 
-// Function to send a message to Telegram using Node.js native fetch
 async function sendTelegramMessage(message: string): Promise<void> {
   const url = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
   try {
@@ -45,7 +46,6 @@ async function sendTelegramMessage(message: string): Promise<void> {
   }
 }
 
-// Define the type for the payload we receive in a star event
 interface StarEventPayload {
   action: string;
   repository: {
@@ -56,7 +56,6 @@ interface StarEventPayload {
   };
 }
 
-// Function to handle the "star" event on the repository
 async function handleStarEvent({ payload }: { payload: StarEventPayload }): Promise<void> {
   if (payload.action === "created") {
     console.log(`New star event received for repository ${payload.repository.full_name}`);
@@ -65,7 +64,6 @@ async function handleStarEvent({ payload }: { payload: StarEventPayload }): Prom
   }
 }
 
-// Set up the listener for the "star" event to call the handleStarEvent function
 app.webhooks.on("star.created", handleStarEvent);
 
 app.webhooks.onError((error: any) => {
