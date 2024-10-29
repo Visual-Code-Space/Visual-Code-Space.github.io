@@ -18,5 +18,26 @@ export interface ForkEventPayload extends EventPayload {
   forkee: {
     full_name: string;
     html_url: string;
-  }
+  };
+}
+
+export interface PushEventPayload extends EventPayload {
+  ref: string;
+  after: string;
+  repository: {
+    name: string;
+  };
+  pusher: {
+    name: string;
+  };
+  commits: Commit[];
+}
+
+export interface Commit {
+  tree_id: string;
+  message: string;
+  url: string;
+  author: {
+    name: string;
+  };
 }
