@@ -54,7 +54,7 @@ export default async function handler(req: any, res: any) {
   const body = req.body;
 
   if (!(await webhooks.verify(body, signature))) {
-    res.status(401).send("Unauthorized");
+    res.status(401).end("Unauthorized");
     return;
   }
 
@@ -66,6 +66,9 @@ export default async function handler(req: any, res: any) {
       const telegramMessage = `The repository ${payload.repository.full_name} received a new star from ${payload.sender.login}! 🌟`;
       await sendTelegramMessage(telegramMessage);
     }
+    res.status(200).end();
+  } else {
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-  res.status(200).end();
 }
