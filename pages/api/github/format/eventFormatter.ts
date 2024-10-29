@@ -1,5 +1,5 @@
 import { WebHookEvent } from "../payload/events"
-import { StarEventPayload } from "../payload/payloads";
+import { StarEventPayload, ForkEventPayload } from "../payload/payloads";
 
 export function formatEvent(event: WebHookEvent): string | undefined {
   const payload = event.payload;
@@ -18,6 +18,17 @@ export function formatEvent(event: WebHookEvent): string | undefined {
       const repositoryUrl = starPayload.repository.html_url;
 
       return `🌟 [@${userLogin}](${userUrl}) starred [${repositoryFullname}](${repositoryUrl})`; 
+    }
+    case "fork": {
+      const forkPayload = payload as ForkEventPayload;
+
+      const userLogin = forkPayload.sender.login;
+      const userUrl = forkPayload.sender.html_url;
+
+      const forkFullname = forkPayload.forkee.full_name;
+      const forkUrl = forkPayload.forkee.html_url;
+
+      return `🍴 [@${userLogin}](${userUrl}) forked [${forkFullname}](${forkUrl})`;
     }
     default:
       return undefined;

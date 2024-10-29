@@ -13,3 +13,10 @@ export interface StarEventPayload extends EventPayload {
     html_url: string;
   };
 }
+
+export interface ForkEventPayload extends EventPayload {
+  forkee: {
+    full_name: string;
+    html_url: string;
+  }
+}
