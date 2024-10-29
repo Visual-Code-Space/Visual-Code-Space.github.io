@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import { StarEventPayload } from "./github/playload/playloads";
+import { StarEventPayload } from "./github/payload/payloads";
 import { sendTelegramMessage } from "./telegram/telegram";
 import { Webhooks } from "@octokit/webhooks";
 
@@ -29,8 +29,8 @@ export default async function handler(req: any, res: any) {
 
   const payload: StarEventPayload = body;
 
-  if (payload.action === "created" && playload.starred_at) {
-    const telegramMessage = `🌟 [@${payload.sender.login}](${playload.sender.html_url}) starred [${payload.repository.full_name}](${payload.repository.html_url})`;
+  if (payload.action === "created" && payload.starred_at) {
+    const telegramMessage = `🌟 [@${payload.sender.login}](${payload.sender.html_url}) starred [${payload.repository.full_name}](${payload.repository.html_url})`;
     await sendTelegramMessage(telegramMessage);
   }
   res.status(200).end();
