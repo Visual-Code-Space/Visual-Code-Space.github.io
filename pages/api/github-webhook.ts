@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const webhooks = new Webhooks({
-  secret: process.env.WEBHOOK_SECRET,
+  secret: process.env.WEBHOOK_SECRET as string,
 });
 
 async function sendTelegramMessage(message: string): Promise<void> {
