@@ -42,6 +42,7 @@ export function formatEvent(event: WebHookEvent): string | undefined {
       });
 
       message += `\n\nPushed by *${pusherName}*`;
+      console.info(message);
 
       return message;
     }
