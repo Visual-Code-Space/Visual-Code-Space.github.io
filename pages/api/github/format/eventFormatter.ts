@@ -30,6 +30,10 @@ export function formatEvent(event: WebHookEvent): string | undefined {
       const commits = pushPayload.commits;
       const commitCount = commits.length;
 
+      if (commitCount < 1) {
+        return undefined;
+      }
+
       let message = `*${commitCount}* new commit${commitCount !== 1 ? 's' : ''} to *${repositoryName}:${pushBranch}*\n`;
 
       commits.forEach((commit) => {
