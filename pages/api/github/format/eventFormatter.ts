@@ -43,7 +43,7 @@ export function formatEvent(event: WebHookEvent): string | undefined {
         const commitMessage = commit.message.replace(/([_*`{[~|])/g, '\\$1');
         
 
-        message += `\n[${treeId.slice(0,7)}](${commitUrl}) ${commitMessage} by ${authorName}`;
+        message += `\n[${treeId.slice(0,7)}](${commitUrl}): ${commitMessage} by ${authorName}`;
       });
 
       message += `\n\nPushed by *${pusherName}*`;
