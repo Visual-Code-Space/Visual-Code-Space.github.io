@@ -140,8 +140,8 @@ export default function Home() {
         justifyContent="space-between"
       >
         <Text variant="body-default-s" onBackground="neutral-weak">
-          © 2024 Visual Code Space,{" "}
-          <Link href="https://github.com/Visual-Code-Space/visual-code-space.github.io#GPL-3.0-1-ov-file">
+          © 2023~2024 Visual Code Space,{" "}
+          <Link href="https://github.com/teixeira0x/visual-code-space.github.io#GPL-3.0-1-ov-file">
             GPL-3.0 License
           </Link>
         </Text>
