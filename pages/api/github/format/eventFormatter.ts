@@ -38,7 +38,7 @@ export function formatEvent(event: WebHookEvent): string | undefined {
       let message = `*${commitCount}* new commit${commitCount !== 1 ? 's' : ''}`;
 
       // Leave the name and the branch that the changes were pushed to. 
-      message += ` to [${repositoryFullname}:${pushBranch}](${repositoryUrl + pushRef})\n`
+      message += ` to [${repositoryFullname}:${pushBranch}](${repositoryUrl}/tree/${pushBranch})\n`
 
       commits.forEach((commit) => {
         const treeId = commit.tree_id;
