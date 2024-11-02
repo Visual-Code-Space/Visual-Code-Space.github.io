@@ -39,7 +39,7 @@ const schema = {
 
 // social links
 const social = {
-    telegram: 'https://t.me/vc_space'
+    telegram: 'https://t.me/visualcodespace'
 }
 
 export { baseURL, style, meta, og, schema, social };
