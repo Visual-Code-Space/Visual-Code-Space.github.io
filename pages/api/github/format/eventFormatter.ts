@@ -25,7 +25,8 @@ export function formatEvent(event: WebHookEvent): string | undefined {
       const pushBranch = pushRef.substring(pushRef.lastIndexOf('/')+1);
       const pusherName = pushPayload.pusher.name;
 
-      const repositoryName = pushPayload.repository.name;
+      const repositoryFullname = pushPayload.repository.full_name;
+      const repositoryUrl = pushPayload.repository.html_url;
 
       const commits = pushPayload.commits;
       const commitCount = commits.length;
@@ -34,20 +35,21 @@ export function formatEvent(event: WebHookEvent): string | undefined {
         return undefined;
       }
 
-      let message = `*${commitCount}* new commit${commitCount !== 1 ? 's' : ''} to *${repositoryName}:${pushBranch}*\n`;
+      let message = `*${commitCount}* new commit${commitCount !== 1 ? 's' : ''}`;
+
+      // Leave the name and the branch that the changes were pushed to. 
+      message += ` to [${repositoryFullname}:${pushBranch}](${repositoryUrl})\n`
 
       commits.forEach((commit) => {
         const treeId = commit.tree_id;
         const authorName = commit.author.name;
         const commitUrl = commit.url;
         const commitMessage = commit.message.replace(/([_*`{[~|])/g, '\\$1');
-        
 
-        message += `\n[${treeId.slice(0,7)}](${commitUrl}): ${commitMessage} by ${authorName}`;
+        message += `\n[${treeId.slice(0,7)}](${commitUrl}): ${commitMessage} by _${authorName}_`;
       });
 
-      message += `\n\nPushed by *${pusherName}*`;
-      return message;
+      return message + `\n\nPushed by *${pusherName}*`;
     }
     case "fork": {
       const forkPayload = payload as ForkEventPayload;

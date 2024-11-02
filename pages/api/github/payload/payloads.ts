@@ -25,7 +25,9 @@ export interface PushEventPayload extends EventPayload {
   ref: string;
   after: string;
   repository: {
+    full_name: string;
     name: string;
+    html_url: string;
   };
   pusher: {
     name: string;
